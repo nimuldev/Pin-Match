@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" type="text" id="generatePin">
+                    <button class="generate-btn" onclick="generatePins()">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control ml-auto" type="text" id="enterPin">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <div class="button" onclick="number(7)">7</div>
+                                <div class="button" onclick="number(8)">8</div>
+                                <div class="button" onclick="number(9)">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="number(4)">4</div>
+                                <div class="button" onclick="number(5)">5</div>
+                                <div class="button" onclick="number(6)">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="number(1)">1</div>
+                                <div class="button" onclick="number(2)">2</div>
+                                <div class="button" onclick="number(3)">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="removeLastDigit()">   < </div>
+                                        <div class="button" onclick="number(0)">0</div>
+                                        <div class="button" onclick="clearNumber()">C</div>
+                                </div>
+                                <div>
+                                    <button type="submit" class="submit-btn" id="submit-btn" onclick="submit()">Submit</button>
+                                    <p class="action-left"><span id="try">3</span> try left</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notify-section">
+                    <p class="notify" id="notMatch">❌ Pin Didn't Match, Please try again</p>
+                    <p class="notify" id="match">✅ Pin Matched... Secret door is opening for you</p>
+                </div>
+            </div>
+
+            <script>
+                var tryNumber=3;
+
+                 const notMatch = document.getElementById("notMatch");
+                 const match = document.getElementById("match");
+                 const generatePin=document.getElementById("generatePin");
+                 
+                function number(num) {
+                    
+                   var pinIs =  document.getElementById("enterPin").value;
+                  var res =   pinIs.concat(num);
+                    document.getElementById("enterPin").value=res;
+                    
+                }
+                function clearNumber() {
+               
+                    document.getElementById("enterPin").value = "";
+                }
+                function submit(){
+                  var numberIs=  document.getElementById("enterPin").value;
+               const generatePinIs=generatePin.value;
+                const tryNumber=document.getElementById("try").innerText;
+               
+                   
+
+                  if(numberIs==generatePinIs && numberIs!=""){
+                    document.getElementById("match").style.display = "block";
+                    document.getElementById("notMatch").style.display = "none";
+                  }
+                  else if(Number(tryNumber)>0){
+                    document.getElementById("match").style.display = "none";
+                    document.getElementById("notMatch").style.display = "block";
+                      var tryIs=Number(tryNumber)-1;
+               
+                    document.getElementById("try").innerText=tryIs;
+                  }
+
+                  if(Number(tryNumber)==0){
+                    document.getElementById("match").style.display = "none";
+                    document.getElementById("notMatch").style.display = "none";
+                    document.getElementById("submit-btn").disabled = false
+                  }
+                }
+
+                function generatePins(){
+                    var x = ("" + Math.random()).substring(2, 6); 
+                    generatePin.value=x;
+                  
+                }
+
+                function removeLastDigit(){
+                    var pinIs =  document.getElementById("enterPin").value;
+                   
+                    pinIs = pinIs.slice(0, -1);
+                    
+                    document.getElementById("enterPin").value=pinIs;
+                }
+
+
+// //var str = 'Java8';
+
+// str = str.substring(0, str.length - 1);
+// console.log(str);
+ 
+
+            </script>
+</body>
+
+</html>
